@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../redux/rootReducer';
 import { getCurrentWeather } from '../../redux/weatherReducer';
 
-import cn from 'classnames';
+import clsx from 'clsx';
 import s from './InputField.module.css';
+import { capitalize } from '../../utils/capitalize';
 
 const InputField = () => {
     const firstLoad = useRef(true)
@@ -32,8 +33,8 @@ const InputField = () => {
 
     return (
         <div className={s.inputWrapper}>
-            <input className={cn({[s.errorInput]: error}, s.input)} type="text" value={value} onChange={handleChange} />
-            {!!error && <div className={s.error}>{error.replace(/./, error[0].toUpperCase())}</div>}
+            <input className={clsx({[s.errorInput]: error}, s.input)} type="text" value={value} onChange={handleChange} />
+            {!!error && <div className={s.error}>{capitalize(error)}</div>}
         </div>
     )
 }
