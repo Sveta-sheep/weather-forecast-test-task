@@ -1,5 +1,5 @@
 import { WeatherDataType } from '../redux/types';
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
     config.params = config.params || {}

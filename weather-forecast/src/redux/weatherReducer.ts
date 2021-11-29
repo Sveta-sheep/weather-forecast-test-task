@@ -1,56 +1,47 @@
 import { Dispatch } from "react";
 import { weatherApi } from "../service/api";
-import { Action, ActionCreator, WeatherDataType } from "./types";
+import { WeatherDataType } from "./types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+type WeatherActionsTypes = string | WeatherDataType
 
-const SET_WEATHER_DATA = "weatherReducer/SET_WEATHER_DATA";
-const SET_ERROR_MESSAGE = "weatherReducer/SET_ERROR_MESSAGE";
-
-type SET_WEATHER_DATA_ACTION = Action<typeof SET_WEATHER_DATA, WeatherDataType>
-type SET_ERROR_MESSAGE_ACTION = Action<typeof SET_ERROR_MESSAGE, string>
-
-type WeatherActionsTypes = SET_WEATHER_DATA_ACTION | SET_ERROR_MESSAGE_ACTION
-
-
-export type WeatherState = {
+export interface WeatherState {
     weatherData: WeatherDataType,
     errorMessage: string
 }
 
-const initialState: WeatherState = {
-    weatherData: {},
-    errorMessage: ''
-}
-
-export const weatherReducer = (state: WeatherState = initialState, action: WeatherActionsTypes): WeatherState => {
-    switch (action.type) {
-        case SET_WEATHER_DATA:
+export const weatherSlice = createSlice({
+    name: 'weather forecast',
+    initialState: {
+        weatherData: {},
+        errorMessage: ''
+    } as WeatherState,
+    reducers: {
+        setWeatherData: (state, action: PayloadAction<WeatherDataType>) => {
             return {
                 ...state,
-                weatherData: action.payload || {}
+                weatherData: action.payload
             }
-        case SET_ERROR_MESSAGE:
+        },
+        setErrorMessage: (state, action: PayloadAction<string>) => {
             return {
                 ...state,
-                errorMessage: action.payload || ''
+                errorMessage: action.payload
             }
-        default:
-            return state
+        }
     }
-}
-
-export const setWeatherData: ActionCreator<typeof SET_WEATHER_DATA, WeatherDataType> = weatherData => ({
-    type: SET_WEATHER_DATA,
-    payload: weatherData
 })
 
-export const setErrorMessage: ActionCreator<typeof SET_ERROR_MESSAGE, string> = error => ({
-    type: SET_ERROR_MESSAGE,
-    payload: error
-})
+export const { setWeatherData, setErrorMessage } = weatherSlice.actions;
 
-export const getCurrentWeather = (city: string) => (dispatch: Dispatch<WeatherActionsTypes>) => {
-        weatherApi.getWeatherForecast(city)
-            .then( (res) => dispatch(setWeatherData(res)))
-            .catch( (err) => dispatch(setErrorMessage(err.response.data.message))) 
+export const selectWeatherData = (state: WeatherState) => state.weatherData;
+export const selectErrorMessage = (state: WeatherState) => state.errorMessage;
+
+export const getCurrentWeather = (city: string) => (dispatch: Dispatch<PayloadAction<WeatherActionsTypes>>) => {
+    weatherApi.getWeatherForecast(city)
+        .then( (res) => dispatch(setWeatherData(res)))
+        .catch( (err) => dispatch(setErrorMessage(err.response.data.message))) 
 }
+
+export default weatherSlice.reducer;
+

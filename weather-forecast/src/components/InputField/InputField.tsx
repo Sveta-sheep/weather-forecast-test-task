@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../../redux/rootReducer';
 import { getCurrentWeather } from '../../redux/weatherReducer';
+import { capitalize } from '../../utils/capitalize';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 import clsx from 'clsx';
 import s from './InputField.module.css';
-import { capitalize } from '../../utils/capitalize';
 
 const InputField = () => {
     const firstLoad = useRef(true)
     const timeout = useRef<NodeJS.Timeout | null>(null)
     const [value, setValue] = useState('')
-    const dispatch = useDispatch()
-    const error = useSelector<AppState, string>(state => state.weatherReducer.errorMessage)
+    const dispatch = useAppDispatch()
+    const error = useAppSelector(state => state.errorMessage)
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
 
@@ -39,4 +38,4 @@ const InputField = () => {
     )
 }
 
-export default InputField
+export default InputField;

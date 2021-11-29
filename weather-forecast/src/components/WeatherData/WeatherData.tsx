@@ -1,6 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { AppState } from '../../redux/rootReducer'
 import sun from '../../images/sunny.png';
 import rain from '../../images/rainy.png';
 import snow from '../../images/snow.png';
@@ -8,8 +6,8 @@ import clear from '../../images/clear.png';
 import windy from '../../images/windy.png';
 import fog from '../../images/fog.png';
 import cloud from '../../images/cloud.png';
-import { WeatherDataType } from '../../redux/types';
 import s from './WeatherData.module.css';
+import { useAppSelector } from '../../redux/hooks';
 
 
 const WeatherIcon = ({ alt, img }: { alt: string, img: string, }) => <img className={s.weatherImg} alt={alt} src={img} />
@@ -35,9 +33,7 @@ const WeatherIcon = ({ alt, img }: { alt: string, img: string, }) => <img classN
     }
     
 const WeatherData = () => {
-    const weatherData = useSelector<AppState, Partial<WeatherDataType>>(state => state.weatherReducer.weatherData)
-
-
+    const weatherData = useAppSelector(state => state.weatherData)
 
     const weatherDescription = weatherData.weather &&
         (weatherData?.weather[0].description[0].toUpperCase() + weatherData.weather[0].description.slice(1))
