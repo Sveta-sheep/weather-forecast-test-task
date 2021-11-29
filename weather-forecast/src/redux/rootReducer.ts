@@ -1,7 +1,7 @@
 import { weatherReducer } from './weatherReducer';
 import { AnyAction, combineReducers } from "redux";
 
-let appReducer = combineReducers({
+const appReducer = combineReducers({
     weatherReducer
 })
 

@@ -1,4 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { WeatherDataType } from '../redux/types';
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
     config.params = config.params || {}
@@ -7,8 +8,8 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 })
 
 export const weatherApi = {
-    getWeatherForecast(city: string): Promise<any> {
+    getWeatherForecast(city: string): Promise<WeatherDataType> {
         return axios.get(`${process.env.REACT_APP_API_URL}?q=${city}&appid&units=metric`)
-            .then(res => res.data)
+            .then((res) => res.data)
     }
 }

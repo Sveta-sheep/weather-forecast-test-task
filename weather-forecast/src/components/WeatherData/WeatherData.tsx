@@ -13,10 +13,6 @@ import s from './WeatherData.module.css';
 
 
 const WeatherIcon = ({ alt, img }: { alt: string, img: string, }) => <img className={s.weatherImg} alt={alt} src={img} />
-
-const WeatherData = () => {
-    const weatherData = useSelector<AppState, Partial<WeatherDataType>>(state => state.weatherReducer.weatherData)
-
     const getWeatherImg = (weatherKey: string) => {
         switch (weatherKey) {
             case 'Sun':
@@ -37,13 +33,18 @@ const WeatherData = () => {
                 return <WeatherIcon alt='sun' img={sun} />
         }
     }
+    
+const WeatherData = () => {
+    const weatherData = useSelector<AppState, Partial<WeatherDataType>>(state => state.weatherReducer.weatherData)
+
+
 
     const weatherDescription = weatherData.weather &&
         (weatherData?.weather[0].description[0].toUpperCase() + weatherData.weather[0].description.slice(1))
 
     return (
         <div className={s.weatherDataWrapper}>
-            <div className={s.weatherImg}>{getWeatherImg(weatherData.weather && weatherData.weather[0].main || '')}</div>
+            <div className={s.weatherImg}>{getWeatherImg(weatherData?.weather?.[0]?.main || '')}</div>
             <div className={s.weatherDescription}>{weatherDescription}</div>
             <div>
                 <div className={s.weatherData}>

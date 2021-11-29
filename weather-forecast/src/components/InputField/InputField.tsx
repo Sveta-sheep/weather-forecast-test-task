@@ -1,14 +1,18 @@
-import React, { KeyboardEventHandler, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentWeather, setWeatherData } from '../../redux/weatherReducer';
+import { AppState } from '../../redux/rootReducer';
+import { getCurrentWeather } from '../../redux/weatherReducer';
 
+import clsx from 'clsx';
 import s from './InputField.module.css';
+import { capitalize } from '../../utils/capitalize';
 
 const InputField = () => {
     const firstLoad = useRef(true)
     const timeout = useRef<NodeJS.Timeout | null>(null)
     const [value, setValue] = useState('')
     const dispatch = useDispatch()
+    const error = useSelector<AppState, string>(state => state.weatherReducer.errorMessage)
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
 
@@ -28,8 +32,9 @@ const InputField = () => {
     }, [value])
 
     return (
-        <div>
-            <input className={s.input} type="text" value={value} onChange={handleChange} />
+        <div className={s.inputWrapper}>
+            <input className={clsx({[s.errorInput]: error}, s.input)} type="text" value={value} onChange={handleChange} />
+            {!!error && <div className={s.error}>{capitalize(error)}</div>}
         </div>
     )
 }
