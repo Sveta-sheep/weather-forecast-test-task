@@ -11,3 +11,21 @@
     outline: none;
     border: 2px solid rgb(26, 74, 177);
 }
+
+.error {
+    color: rgb(219, 41, 41);
+
+}
+
+.errorInput,
+.errorInput:focus {
+    border: 2px solid rgb(219, 41, 41);
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+}

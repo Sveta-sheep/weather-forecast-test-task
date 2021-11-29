@@ -1,16 +1,16 @@
-export type WeatherDataType = {
-    coord: {
+export interface WeatherDataType {
+    coord?: {
         lon: number,
         lat: number
     },
-    weather: {
+    weather?: {
         id: number,
         main: string,
         description: string,
         icon: string
     }[],
-    base: string,
-    main: {
+    base?: string,
+    main?: {
         temp: number,
         feels_like: number,
         temp_min: number,
@@ -18,26 +18,26 @@ export type WeatherDataType = {
         pressure: number,
         humidity: number
     },
-    visibility: number,
-    wind: {
+    visibility?: number,
+    wind?: {
         speed: number,
         deg: number
     },
-    clouds: {
+    clouds?: {
         all: number
     },
-    dt: number,
-    sys: {
+    dt?: number,
+    sys?: {
         type: number,
         id: number,
         country: string,
         sunrise: number,
         sunset: number
     },
-    timezone: number,
-    id: number,
-    name: string,
-    cod: number
+    timezone?: number,
+    id?: number,
+    name?: string,
+    cod?: number
 }
 
 export type Action<T extends string, P = any> = {
