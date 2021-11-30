@@ -1,42 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from '../../redux/rootReducer';
-import { getCurrentWeather } from '../../redux/weatherReducer';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import clsx from "clsx";
+import { getCurrentWeather } from "../../redux/weatherSlice/thinks";
 
-import clsx from 'clsx';
-import s from './InputField.module.css';
-import { capitalize } from '../../utils/capitalize';
+import s from "./InputField.module.css";
+import { selectErrorMessage } from "../../redux/weatherSlice/selectors";
+import { capitalize } from "../../utils";
 
-const InputField = () => {
-    const firstLoad = useRef(true)
-    const timeout = useRef<NodeJS.Timeout | null>(null)
-    const [value, setValue] = useState('')
-    const dispatch = useDispatch()
-    const error = useSelector<AppState, string>(state => state.weatherReducer.errorMessage)
+const InputField = function () {
+  const firstLoad = useRef(true);
+  const timeout = useRef<NodeJS.Timeout | null>(null);
+  const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+  const error = useSelector(selectErrorMessage);
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) =>
+    setValue(e.currentTarget.value);
 
-    const handleChange = (e: React.FormEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
+  useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
 
-    useEffect(() => {
-        if (firstLoad.current) {
-            firstLoad.current = false
-            return 
-        }
+    timeout.current = setTimeout(() => {
+      dispatch(getCurrentWeather(value));
+    }, 2000);
 
-        timeout.current = setTimeout(() => {
-            dispatch(getCurrentWeather(value))
-        }, 2000);
+    return () => {
+      if (!!timeout.current) clearTimeout(timeout.current);
+    };
+  }, [dispatch, value]);
 
-        return () => {
-            !!timeout.current && clearTimeout(timeout.current);
-        }
-    }, [value])
+  return (
+    <div className={s.inputWrapper}>
+      <input
+        className={clsx({ [s.errorInput]: error }, s.input)}
+        type="text"
+        value={value}
+        onChange={handleChange}
+      />
+      {!!error && <div className={s.error}>{capitalize(error)}</div>}
+    </div>
+  );
+};
 
-    return (
-        <div className={s.inputWrapper}>
-            <input className={clsx({[s.errorInput]: error}, s.input)} type="text" value={value} onChange={handleChange} />
-            {!!error && <div className={s.error}>{capitalize(error)}</div>}
-        </div>
-    )
-}
-
-export default InputField
+export default InputField;
