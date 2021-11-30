@@ -17,16 +17,10 @@ export const weatherSlice = createSlice({
   initialState,
   reducers: {
     setWeatherData: (state, action: PayloadAction<WeatherDataType>) => {
-      return {
-        ...state,
-        weatherData: action.payload,
-      };
+      state.weatherData = action.payload;
     },
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
-      return {
-        ...state,
-        error: action.payload,
-      };
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
