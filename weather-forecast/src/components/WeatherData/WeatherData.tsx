@@ -1,13 +1,9 @@
-import React, { useEffect } from "react";
 import s from "./WeatherData.module.css";
 import { capitalize } from "../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectErrorMessage,
-  selectWeatherData,
-} from "../../redux/weatherSlice/selectors";
+import { useSelector } from "react-redux";
+import { selectWeatherData } from "../../redux/weatherSlice/selectors";
 import getWeatherImg from "../../utils/getWeatherImg";
-import { clearWeatherData } from "../../redux/weatherSlice/reducer";
+import { WeatherKeyType } from "./WeatherKeyType";
 
 const WeatherData = () => {
   const weatherData = useSelector(selectWeatherData);
@@ -15,7 +11,7 @@ const WeatherData = () => {
   return (
     <div className={s.weatherDataWrapper}>
       <div className={s.weatherImg}>
-        {getWeatherImg(weatherData?.weather?.[0]?.main || "")}
+        {getWeatherImg(weatherData?.weather?.[0]?.main as WeatherKeyType)}
       </div>
       <div className={s.weatherDescription}>
         {weatherData.weather && capitalize(weatherData?.weather[0].description)}

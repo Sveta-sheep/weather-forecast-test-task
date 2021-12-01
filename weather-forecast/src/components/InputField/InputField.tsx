@@ -7,17 +7,17 @@ import { capitalize } from "../../utils";
 import useCurrentWeather from "./useCurrentWeather";
 
 const InputField = function () {
-  const [value, handleChange, error] = useCurrentWeather();
+  const { value, handleChange, error } = useCurrentWeather();
 
   return (
     <div className={s.inputWrapper}>
       <input
         className={clsx({ [s.errorInput]: error }, s.input)}
         type="text"
-        value={value as string}
-        onChange={handleChange as ChangeEventHandler<HTMLInputElement>}
+        value={value}
+        onChange={handleChange}
       />
-      {!!error && <div className={s.error}>{capitalize(error as string)}</div>}
+      {!!error && <div className={s.error}>{capitalize(error)}</div>}
     </div>
   );
 };
