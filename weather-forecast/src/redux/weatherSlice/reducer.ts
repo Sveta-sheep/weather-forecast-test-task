@@ -1,5 +1,5 @@
 import { getCurrentWeather } from "./../weatherSlice/thinks";
-import { WeatherDataType } from "./../types";
+import { WeatherDataType } from "../interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface WeatherState {
