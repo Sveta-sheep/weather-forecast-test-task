@@ -1,4 +1,4 @@
-import { WeatherDataType } from "../redux/types";
+import { WeatherDataType } from "../redux/interfaces";
 import instance from "./axiosInstance";
 
 export const weatherApi = {
