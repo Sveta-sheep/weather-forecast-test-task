@@ -7,6 +7,7 @@ import { WeatherKeyType } from "./WeatherKeyType";
 
 const WeatherData = () => {
   const weatherData = useSelector(selectWeatherData);
+  console.log(weatherData);
 
   return (
     <div className={s.weatherDataWrapper}>

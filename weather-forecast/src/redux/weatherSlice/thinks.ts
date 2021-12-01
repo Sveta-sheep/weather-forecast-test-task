@@ -1,5 +1,5 @@
 import { WeatherDataType } from "../interfaces";
-import { weatherApi } from "./../../service/api";
+import { weatherApi } from "../../service/weatherApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getErrorMessage } from "../../utils/getErrorMessage";
 
