@@ -1,52 +1,21 @@
-import React from "react";
-import sun from "../../images/sunny.png";
-import rain from "../../images/rainy.png";
-import snow from "../../images/snow.png";
-import clear from "../../images/clear.png";
-import windy from "../../images/windy.png";
-import fog from "../../images/fog.png";
-import cloud from "../../images/cloud.png";
 import s from "./WeatherData.module.css";
-import { useAppSelector } from "../../redux/hooks";
-
-const WeatherIcon = ({ alt, img }: { alt: string; img: string }) => (
-  <img className={s.weatherImg} alt={alt} src={img} />
-);
-const getWeatherImg = (weatherKey: string) => {
-  switch (weatherKey) {
-    case "Sun":
-      return <WeatherIcon alt="sun" img={sun} />;
-    case "Clear":
-      return <WeatherIcon alt="clear" img={clear} />;
-    case "Windy":
-      return <WeatherIcon alt="windy" img={windy} />;
-    case "Fog":
-      return <WeatherIcon alt="fog" img={fog} />;
-    case "Snow":
-      return <WeatherIcon alt="snow" img={snow} />;
-    case "Rain":
-      return <WeatherIcon alt="rain" img={rain} />;
-    case "Clouds":
-      return <WeatherIcon alt="cloud" img={cloud} />;
-    default:
-      return <WeatherIcon alt="sun" img={sun} />;
-  }
-};
+import { capitalize } from "../../utils";
+import { useSelector } from "react-redux";
+import { selectWeatherData } from "../../redux/weatherSlice/selectors";
+import getWeatherImg from "../../utils/getWeatherImg";
+import { WeatherKeyType } from "./WeatherKeyType";
 
 const WeatherData = () => {
-  const weatherData = useAppSelector((state) => state.weatherData);
-
-  const weatherDescription =
-    weatherData.weather &&
-    weatherData?.weather[0].description[0].toUpperCase() +
-      weatherData.weather[0].description.slice(1);
+  const weatherData = useSelector(selectWeatherData);
 
   return (
     <div className={s.weatherDataWrapper}>
       <div className={s.weatherImg}>
-        {getWeatherImg(weatherData?.weather?.[0]?.main || "")}
+        {getWeatherImg(weatherData?.weather?.[0]?.main as WeatherKeyType)}
       </div>
-      <div className={s.weatherDescription}>{weatherDescription}</div>
+      <div className={s.weatherDescription}>
+        {weatherData.weather && capitalize(weatherData?.weather[0].description)}
+      </div>
       <div>
         <div className={s.weatherData}>
           <p className={s.weatherProperty}>Temperature</p>

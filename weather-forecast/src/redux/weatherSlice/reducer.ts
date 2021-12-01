@@ -22,6 +22,12 @@ export const weatherSlice = createSlice({
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+    clearError: (state) => {
+      state.error = "";
+    },
+    clearWeatherData: (state) => {
+      state.weatherData = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -34,6 +40,7 @@ export const weatherSlice = createSlice({
   },
 });
 
-export const { setWeatherData, setErrorMessage } = weatherSlice.actions;
+export const { setWeatherData, setErrorMessage, clearError, clearWeatherData } =
+  weatherSlice.actions;
 
 export default weatherSlice.reducer;
