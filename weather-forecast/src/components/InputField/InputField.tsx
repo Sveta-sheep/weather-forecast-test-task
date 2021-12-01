@@ -7,8 +7,7 @@ import { capitalize } from "../../utils";
 import useCurrentWeather from "./useCurrentWeather";
 
 const InputField = function () {
-  const error = useSelector(selectErrorMessage);
-  const [value, handleChange] = useCurrentWeather();
+  const [value, handleChange, error] = useCurrentWeather();
 
   return (
     <div className={s.inputWrapper}>

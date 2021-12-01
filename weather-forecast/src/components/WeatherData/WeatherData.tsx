@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./WeatherData.module.css";
 import { capitalize } from "../../utils";
-import { useSelector } from "react-redux";
-import { selectWeatherData } from "../../redux/weatherSlice/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectErrorMessage,
+  selectWeatherData,
+} from "../../redux/weatherSlice/selectors";
 import getWeatherImg from "../../utils/getWeatherImg";
+import { clearWeatherData } from "../../redux/weatherSlice/reducer";
 
 const WeatherData = () => {
   const weatherData = useSelector(selectWeatherData);

@@ -1,15 +1,17 @@
+import { selectWeatherData } from "./../../redux/weatherSlice/selectors";
 import { getCurrentWeather } from "../../redux/weatherSlice/thinks";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import React from "react";
-import _ from "lodash";
 import { selectErrorMessage } from "../../redux/weatherSlice/selectors";
-import { setErrorMessage } from "../../redux/weatherSlice/reducer";
+import { clearError } from "../../redux/weatherSlice/reducer";
+import { debounce } from "ts-debounce";
 
 const useCurrentWeather = () => {
   const firstLoad = useRef(true);
   const [value, setValue] = useState("");
   const error = useSelector(selectErrorMessage);
+  const weatherData = useSelector(selectWeatherData);
   const dispatch = useDispatch();
   const handleChange = (e: React.FormEvent<HTMLInputElement>) =>
     setValue(e.currentTarget.value);
@@ -20,9 +22,9 @@ const useCurrentWeather = () => {
       return;
     }
 
-    // dispatch(setErrorMessage(null));
-    dispatch(_.debounce(getCurrentWeather(value), 2000));
-  }, [dispatch, value]);
+    if (weatherData) dispatch(clearError());
+    dispatch(debounce(getCurrentWeather(value), 2000));
+  }, [dispatch, value, weatherData]);
 
   return [value, handleChange, error];
 };
