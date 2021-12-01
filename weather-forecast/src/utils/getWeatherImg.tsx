@@ -7,8 +7,8 @@ import Clear from "../images/clear.png";
 import Windy from "../images/windy.png";
 import Fog from "../images/fog.png";
 import Clouds from "../images/cloud.png";
-import { IWeatherProps } from "../components/WeatherData/weatherIcon/IweatherProps";
 import { WeatherKeyType } from "../components/WeatherData/WeatherKeyType";
+import { IWeatherProps } from "../components/WeatherData/weatherIcon/IWeatherProps";
 
 const weatherIconObj: Record<WeatherKeyType, IWeatherProps> = {
   Sun: { alt: "sun", img: Sun },
