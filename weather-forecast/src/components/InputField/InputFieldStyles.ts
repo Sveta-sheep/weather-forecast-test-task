@@ -1,24 +1,31 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { createTheme } from "@mui/material/styles";
+
+export const theme = createTheme({
+  typography: {
+    fontFamily: "fantasy",
+    fontSize: 17,
+  },
+  palette: {
+    error: {
+      main: "rgb(219, 41, 41)",
+    },
+  },
+});
 
 const useStyles = makeStyles({
   input: {
     width: 350,
     height: 40,
     borderRadius: 5,
-    color: "white",
-    fontSize: 20,
-    fontFamily: [
-      "Lucida Sans",
-      "Lucida Sans Regular",
-      "Lucida Grande",
-      "Lucida Sans Unicode",
-      "Geneva",
-      "Verdana",
-      "sans-serif",
-    ].join(","),
+    fontSize: theme.typography.fontSize,
+    fontFamily: theme.typography.fontFamily,
+    "&.Mui-focused": {
+      borderColor: "pink",
+    },
   },
   error: {
-    color: "rgb(219, 41, 41)",
+    color: theme.palette.error.main,
   },
   errorInput: {
     "&.Mui-focused": {

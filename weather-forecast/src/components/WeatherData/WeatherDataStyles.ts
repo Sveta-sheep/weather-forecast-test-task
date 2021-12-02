@@ -1,7 +1,8 @@
+import { createTheme } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
-  weatherDescription: {
+const theme = createTheme({
+  typography: {
     fontFamily: [
       "Cambria",
       "Cochin",
@@ -11,6 +12,13 @@ export const useStyles = makeStyles({
       "serif",
     ].join(","),
     fontSize: 21,
+  },
+});
+
+export const useStyles = makeStyles({
+  weatherDescription: {
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.fontSize,
   },
   weatherDataWrapper: {
     display: "flex",
@@ -25,15 +33,8 @@ export const useStyles = makeStyles({
     gap: 30,
   },
   weatherProperty: {
-    fontFamily: [
-      "Cambria",
-      "Cochin",
-      "Georgia",
-      "Times",
-      "Times New Roman",
-      "serif",
-    ].join(","),
-    fontSize: 21,
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.fontSize,
     fontWeight: 600,
     textDecoration: "underline",
   },
