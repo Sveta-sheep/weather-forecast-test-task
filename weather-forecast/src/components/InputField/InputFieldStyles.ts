@@ -1,19 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { createTheme } from "@mui/material/styles";
 
-export const theme = createTheme({
-  typography: {
-    fontFamily: "fantasy",
-    fontSize: 17,
-  },
-  palette: {
-    error: {
-      main: "rgb(219, 41, 41)",
-    },
-  },
-});
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   input: {
     width: 350,
     height: 40,
@@ -37,8 +24,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    gap: 8,
+    gap: 16,
   },
-});
+}));
 
 export default useStyles;
