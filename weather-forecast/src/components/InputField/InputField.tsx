@@ -1,36 +1,28 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import clsx from "clsx";
-import s from "./InputField.module.css";
 import { capitalize } from "../../utils";
 import useCurrentWeather from "./useCurrentWeather";
+import useStyles from "./InputFieldStyles";
 
 const InputField = function () {
   const { value, handleChange, error } = useCurrentWeather();
+  const classes = useStyles();
 
   return (
-    <div className={s.inputWrapper}>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="standard-basic"
-          label="Enter the city"
-          type="text"
-          value={value}
-          onChange={() => handleChange}
-          variant="standard"
-        />
-        <input className={clsx({ [s.errorInput]: error }, s.input)} />
-        {!!error && <div className={s.error}>{capitalize(error)}</div>}
-      </Box>
-    </div>
+    <Box className={classes.inputWrapper} component="form" autoComplete="off">
+      <TextField
+        error={!!error}
+        className={clsx({ [classes.errorInput]: error }, classes.input)}
+        id="standard-basic"
+        label={error ? "Error" : "Enter the city"}
+        type="text"
+        value={value}
+        onChange={handleChange}
+        variant="standard"
+      />
+      {!!error && <div className={classes.error}>{capitalize(error)}</div>}
+    </Box>
   );
 };
 

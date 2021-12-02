@@ -1,9 +1,14 @@
 import { IWeatherProps } from "./IWeatherProps";
-import s from "./WeatherIcon.module.css";
+import { useStyles } from "./WeatherIconStyles";
 
 const WeatherIcon = ({ alt, img }: IWeatherProps) => {
+  const classes = useStyles();
   return (
-    <img className={s.weatherImg} alt={alt} src={`/assets/images/${img}.png`} />
+    <img
+      className={classes.weatherImg}
+      alt={alt}
+      src={`/assets/images/${img}.png`}
+    />
   );
 };
 

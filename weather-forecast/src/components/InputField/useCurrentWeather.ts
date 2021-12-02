@@ -12,8 +12,9 @@ const useCurrentWeather = () => {
   const error = useSelector(selectErrorMessage);
   const weatherData = useSelector(selectWeatherData);
   const dispatch = useDispatch();
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) =>
-    setValue(e.currentTarget.value);
+  const handleChange = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setValue(e.currentTarget.value);
 
   const getWeatherRequestWithDebounce = useMemo(() => {
     return debounce(() => {
